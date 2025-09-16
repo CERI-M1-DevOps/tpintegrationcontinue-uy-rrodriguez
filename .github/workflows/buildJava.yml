@@ -18,4 +18,4 @@ jobs:
           # Java distribution. See the list of supported distributions in README file
           distribution: corretto
       - name: Build with Maven
-        run: mvn –B package
+        run: mvn -B package
