@@ -24,6 +24,11 @@ jobs:
           cache: 'maven'
       - name: Generate Javadoc
         run: mvn -B javadoc::javadoc
+      - name: Find Javadoc output
+        run: |
+          ls -l .
+          ls -l target
+          ls -l target/reports
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
