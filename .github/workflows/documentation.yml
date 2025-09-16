@@ -21,9 +21,10 @@ jobs:
   docs:
     name: Documentation
     #if: github.event.pull_request.merged == true
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Environment needed only when doing manual deployment of GitHub Pages
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
