@@ -10,9 +10,12 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  # Permissions when using peaceiris/actions-gh-pages
+  contents: write
+  # Permissions when using manual deployment steps
+  # contents: read
+  # pages: write
+  # id-token: write
 
 jobs:
   docs:
@@ -37,18 +40,20 @@ jobs:
       - name: Generate Javadoc
         run: mvn -B javadoc::javadoc
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './target/reports/apidocs'
+      # Deployment using peaceiris/actions-gh-pages (requires an extra branch, created automatically)
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/reports/apidocs
 
-      # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v4
+      # Manual deployment using GitHub plugins (does not require an extra branch)
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v5
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
       #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./target/reports/apidocs
+      #     path: './target/reports/apidocs'
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
