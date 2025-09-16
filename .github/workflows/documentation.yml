@@ -1,0 +1,31 @@
+name: Serve Javadoc with GitHub Pages
+on:
+  pull_request:
+    branches:
+      - main
+    #types:
+    #  - closed
+jobs:
+  docs:
+    name: Documentation
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
+          java-version: 21
+          # Java distribution. See the list of supported distributions in README file
+          distribution: corretto
+          # Configure cache for Maven
+          cache: 'maven'
+      - name: Generate Javadoc
+        run: mvn -B javadoc::javadoc
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/site/apidocs
