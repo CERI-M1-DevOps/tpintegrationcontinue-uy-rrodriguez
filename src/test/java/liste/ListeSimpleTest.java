@@ -283,4 +283,5 @@ class ListeSimpleTest {
         listeATester.echanger(r1, r2);
         assertEquals("ListeSimple(Noeud(1), Noeud(2), Noeud(3))", listeATester.toString());
     }
+
 }
